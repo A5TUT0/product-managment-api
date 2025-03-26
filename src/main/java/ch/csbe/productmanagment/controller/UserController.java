@@ -40,4 +40,9 @@ public class UserController {
         userService.delete(id);
         return ResponseEntity.noContent().build();
     }
+    @PutMapping("/promote/{id}")
+    public ResponseEntity<Void> promote(@PathVariable Long id) {
+        userService.promoteToAdmin(id);
+        return ResponseEntity.noContent().build();
+    }
 }
