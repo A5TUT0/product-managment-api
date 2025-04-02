@@ -55,4 +55,15 @@ public class ProductController {
         productService.delete(id);
         return ResponseEntity.noContent().build();
     }
+    @Operation(
+            summary = "Get products by category ID",
+            description = "Retrieve all products that belong to a specific category"
+    )
+    @ApiResponse(responseCode = "200", description = "Products retrieved successfully")
+    @ApiResponse(responseCode = "404", description = "Category not found")
+    @GetMapping("/by-category/{categoryId}")
+    public ResponseEntity<List<Product>> getByCategoryId(@PathVariable Long categoryId) {
+        return ResponseEntity.ok(productService.getByCategoryId(categoryId));
+    }
+
 }
