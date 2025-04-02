@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service implementation for category-related operations.
+ */
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -20,6 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category getById(Long id) {
+        // Retrieves a category by ID or throws an exception if not found
         return categoryRepository.findById(id).orElseThrow(() ->
                 new RuntimeException("Category with ID " + id + " not found"));
     }
@@ -31,6 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category update(Long id, Category category) {
+        // Updates only the name of the category
         Category existing = getById(id);
         existing.setName(category.getName());
         return categoryRepository.save(existing);

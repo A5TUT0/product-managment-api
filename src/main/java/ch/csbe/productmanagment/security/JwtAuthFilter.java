@@ -25,6 +25,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * This filter intercepts each request to validate the JWT token.
+     * If the token is valid, the user is authenticated and stored in the security context.
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -32,6 +36,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         final String authHeader = request.getHeader("Authorization");
 
+        // Continue filter chain if the Authorization header is missing or doesn't contain a Bearer token
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
@@ -41,15 +46,19 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String username = null;
 
         try {
+            // Extract username from JWT token
             username = jwtService.extractUsername(token);
         } catch (ExpiredJwtException e) {
+            // Token is expired – reject with 401 Unauthorized
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
+        // If user is not already authenticated and username is valid
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             User user = userRepository.findByUsername(username).orElse(null);
 
+            // Validate token and authenticate user
             if (user != null && jwtService.validateToken(token, username)) {
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(user, null, null);
@@ -58,6 +67,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
         }
 
+        // Continue with the next filter in the chain
         filterChain.doFilter(request, response);
     }
 }

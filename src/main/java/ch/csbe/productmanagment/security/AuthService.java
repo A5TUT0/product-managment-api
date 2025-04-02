@@ -17,16 +17,25 @@ public class AuthService {
     @Autowired
     private UserRepository userRepository;
 
+    // Used for password hashing and verification
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    /**
+     * Authenticates the user by verifying the credentials and generates a JWT token.
+     *
+     * @param request the authentication request with username and password
+     * @return AuthResponse containing the generated JWT token
+     */
     public AuthResponse authenticate(AuthRequest request) {
         User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        // Validate password against hashed value in database
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
 
+        // Generate JWT token on successful authentication
         String token = jwtService.generateToken(user.getUsername());
         return new AuthResponse(token);
     }

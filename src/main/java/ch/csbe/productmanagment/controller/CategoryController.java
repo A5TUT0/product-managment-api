@@ -19,6 +19,9 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    /**
+     * Creates a new product category.
+     */
     @Operation(summary = "Create a new category", description = "Create a new product category")
     @ApiResponse(responseCode = "200", description = "Category created successfully")
     @PostMapping
@@ -26,6 +29,9 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.create(category));
     }
 
+    /**
+     * Retrieves a category by its unique ID.
+     */
     @Operation(summary = "Get a category by ID", description = "Retrieve a category by its ID")
     @ApiResponse(responseCode = "200", description = "Category retrieved successfully")
     @ApiResponse(responseCode = "404", description = "Category not found")
@@ -34,6 +40,9 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.getById(id));
     }
 
+    /**
+     * Returns a list of all available categories.
+     */
     @Operation(summary = "Get all categories", description = "Retrieve all categories")
     @ApiResponse(responseCode = "200", description = "Categories retrieved successfully")
     @GetMapping
@@ -41,6 +50,9 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.getAll());
     }
 
+    /**
+     * Updates an existing category identified by ID.
+     */
     @Operation(summary = "Update an existing category", description = "Update an existing product category")
     @ApiResponse(responseCode = "200", description = "Category updated successfully")
     @PutMapping("/{id}")
@@ -48,6 +60,9 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.update(id, category));
     }
 
+    /**
+     * Deletes a category by ID.
+     */
     @Operation(summary = "Delete a category", description = "Delete a category by ID")
     @ApiResponse(responseCode = "204", description = "Category deleted successfully")
     @DeleteMapping("/{id}")

@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service implementation for handling business logic related to products.
+ */
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -31,11 +34,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product update(Long id, Product product) {
+        // Retrieve existing product or throw if not found
         Product existing = getById(id);
+
+        // Update fields
         existing.setName(product.getName());
         existing.setDescription(product.getDescription());
         existing.setPrice(product.getPrice());
         existing.setCategory(product.getCategory());
+
         return productRepository.save(existing);
     }
 
