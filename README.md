@@ -25,6 +25,7 @@ docker-compose up -d
 ```
 
 This will start:
+
 - MariaDB database on port `3306`
 - Adminer (DB GUI) on `http://localhost:8082`
 
@@ -54,11 +55,11 @@ You can explore all endpoints directly from the browser.
 
 ## 📝 Default Ports
 
-| Service      | Port       |
-|--------------|------------|
-| Spring Boot  | `8081`     |
-| Adminer      | `8082`     |
-| MariaDB      | `3306`     |
+| Service     | Port   |
+| ----------- | ------ |
+| Spring Boot | `8081` |
+| Adminer     | `8082` |
+| MariaDB     | `3306` |
 
 ---
 
@@ -69,4 +70,4 @@ Email: `noah.lezama@ict.csbe.ch`
 
 ---
 
-> This project is part of the üK295 module: *Backend für Applikationen realisieren*
+> This project is part of the üK295 module: _Backend für Applikationen realisieren_
